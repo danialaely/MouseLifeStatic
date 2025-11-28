@@ -1,0 +1,53 @@
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class PurchaseStatusPanel : MonoBehaviour
+{
+
+    public Image bg;
+    public TMP_Text heading;
+    public Image itemIcon;
+    public TMP_Text itemText;
+
+    public Color success;
+    public Color failed;
+
+    public Sprite successBg;
+    public Sprite failedBg;
+
+    private GameObject panel;
+
+    public static PurchaseStatusPanel INSTANCE { get; protected private set; }
+
+    private void Awake()
+    {      
+        INSTANCE = this;
+        panel = transform.GetChild(0).gameObject;
+    }
+
+    public void Show(Sprite sprite, string text, bool status)
+    {
+        if (status)
+        {
+            bg.sprite = successBg;
+            heading.color = success;
+            heading.text = "Purchase Successful";
+        }
+        else
+        {
+            bg.sprite = failedBg;
+            heading.color = failed;
+            heading.text = "Purchase Failed";
+        }
+
+        itemIcon.sprite = sprite;
+        itemText.text = text;
+        panel.SetActive(true);
+    }
+
+    public void Close()
+    {
+        panel.SetActive(false);
+    }
+}
